@@ -6,7 +6,7 @@ import axios from 'axios'
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 const request = axios.create({
   baseURL: '/api',
-  
+
 })
 
 const tableData = ref([])
@@ -28,24 +28,40 @@ const handleAdd = () => {
   show.value = true
 }
 
-const handleEdit = () => {
+const handleEdit = (row) => {
+  show.value = true
+  getDetail(row.custom_code)
 }
 
 const getList = () => {
-  request.get('/all').then(res=>{
-    console.log(res)
+  request.get('/all').then(res => {
+    tableData.value = res.data.data
   })
 }
 
-const getDetail = () => {
-
+const getDetail = (id) => {
+  request.get('/prices/' + id).then(res => {
+    const { custom, list } = res.data.data
+    formData.value = custom[0] || XEUtils.clone(defaultFormData, true)
+    formTableData.value = list.length > 0 ? list : XEUtils.clone(defalutFormTableData, true)
+  })
 }
 
 const save = () => {
-
+  request.post('/prices/' + formData.value.custom_code, {
+    custom: formData.value,
+    list: formTableData.value.map(v => {
+      delete v._X_ROW_KEY
+      delete v.id
+      v.custom_code = formData.value.custom_code
+      return v
+    })
+  }).then(res => {
+    getList()
+  })
 }
 
-onMounted(()=>{
+onMounted(() => {
   getList()
 })
 
@@ -118,6 +134,10 @@ const cancelEvent = () => {
 }
 
 const confirmEvent = () => {
+  if (!formData.value.custom_code) {
+    return
+  }
+  save()
   show.value = false
 }
 

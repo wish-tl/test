@@ -39,7 +39,6 @@ router.get(`/prices/:id`, async (ctx) => {
 });
 
 router.post(`/prices/:id`, async (ctx) => {
-    console.log(ctx.request.body);
     try {
         await queries.save(ctx.params.id, ctx.request.body);
         ctx.body = {
