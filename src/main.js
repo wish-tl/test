@@ -1,10 +1,13 @@
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
+const cors = require('koa-cors');
 
 const app = new Koa();
-
 const indexRoutes = require("./server/routes/index");
 
+app.use(cors({
+    headers: "*"
+}))
 app.use(bodyParser()); // 在路由之前加入中间件
 app.use(indexRoutes.routes());
 

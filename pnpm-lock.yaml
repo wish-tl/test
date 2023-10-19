@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@koa/cors':
+    specifier: ^4.0.0
+    version: 4.0.0
   knex:
     specifier: ^3.0.1
     version: 3.0.1(sqlite3@5.1.6)
@@ -14,9 +17,15 @@ dependencies:
   koa-bodyparser:
     specifier: ^4.4.1
     version: 4.4.1
+  koa-cors:
+    specifier: ^0.0.16
+    version: 0.0.16
   koa-router:
     specifier: ^11.0.2
     version: 11.0.2
+  koa2-cors:
+    specifier: ^2.0.6
+    version: 2.0.6
   sqlite3:
     specifier: ^5.1.6
     version: 5.1.6
@@ -28,6 +37,13 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@koa/cors@4.0.0:
+    resolution: {integrity: sha512-Y4RrbvGTlAaa04DBoPBWJqDR5gPj32OOz827ULXfgB1F7piD1MB/zwn8JR2LAnvdILhxUbXbkXGWuNVsFuVFCQ==}
+    engines: {node: '>= 14.0.0'}
+    dependencies:
+      vary: 1.1.2
+    dev: false
 
   /@mapbox/node-pre-gyp@1.0.11:
     resolution: {integrity: sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==}
@@ -718,6 +734,10 @@ packages:
       koa-compose: 4.1.0
     dev: false
 
+  /koa-cors@0.0.16:
+    resolution: {integrity: sha512-s15knPxe3AJBi2I/ZMPL0pSqU+PLYLO6k5tI0AqClkzavowvocPlSdFUwaHNqtjHMhsGmiq2tiX/25iILJx9YA==}
+    dev: false
+
   /koa-router@11.0.2:
     resolution: {integrity: sha512-nrKd39sXnhfkV7KgPnoqQtkhruNy62S60jrFI0fAMP9mGnVA8L+iD0GggpEJT2HRYkexHPH7GAHjrBPXh+zA/g==}
     engines: {node: '>= 12'}
@@ -729,6 +749,11 @@ packages:
       path-to-regexp: 6.2.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /koa2-cors@2.0.6:
+    resolution: {integrity: sha512-JRCcSM4lamM+8kvKGDKlesYk2ASrmSTczDtGUnIadqMgnHU4Ct5Gw7Bxt3w3m6d6dy3WN0PU4oMP43HbddDEWg==}
+    engines: {node: '>= 7.6.0'}
     dev: false
 
   /koa@2.14.2:

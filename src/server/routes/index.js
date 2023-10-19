@@ -13,46 +13,42 @@ router.get("/all", async (ctx) => {
         };
     } catch (err) {
         console.log(err);
+        ctx.body = {
+            status: "errors",
+        };
     }
 });
 
 router.get(`/prices/:id`, async (ctx) => {
     try {
-        const data = await queries.getPriceByCode(ctx.params.id);
-        if (data.length) {
-            ctx.body = {
-                status: "success",
-                data: data,
-            };
-        } else {
-            ctx.status = 404;
-            ctx.body = {
-                status: "error",
-                message: "That does not exist.",
-            };
-        }
+        const list = await queries.getPriceByCode(ctx.params.id);
+        const custom = await queries.getCustomByCode(ctx.params.id)
+        ctx.body = {
+            status: "success",
+            data: {
+                custom,
+                list
+            },
+        };
     } catch (err) {
         console.log(err);
+        ctx.body = {
+            status: "errors",
+        };
     }
 });
 
 router.post(`/prices/:id`, async (ctx) => {
+    console.log(ctx.request.body);
     try {
-        const data = await queries.getPriceByCode(ctx.params.id);
-        if (data.length) {
-            await queries.updatePrice(ctx.params.id, ctx.request.body);
-        } else {
-            await queries.addPrice(ctx.request.body);
-        }
-        ctx.status = 201;
+        await queries.save(ctx.params.id, ctx.request.body);
         ctx.body = {
-            status: "success",
+            status: "success"
         };
     } catch (err) {
-        ctx.status = 400;
+        console.log(err);
         ctx.body = {
-            status: "error",
-            message: err.message || "Sorry, an error has occurred.",
+            status: "errors",
         };
     }
 });
